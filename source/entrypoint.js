@@ -2,7 +2,7 @@ const { execSync, spawn, spawnSync } = require('child_process'),
       { constants: filesystemConstants, promises: filesystem } = require('fs'),
       path = require('path')
 
-async function installModule({ 
+async function installModule({
     installPath,  // path of package.json.
     options = { checkIfInstalled: true } 
 }) { // Install nodejs packages before  
