@@ -1,1 +1,1 @@
-installNodeJSModule
+./documentation/information.md
