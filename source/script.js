@@ -1,35 +1,35 @@
-const { execSync, spawn, spawnSync } = require('child_process'),
-  { constants: filesystemConstants, promises: filesystem } = require('fs'),
-  path = require('path')
+"use strict";const { execSync, spawn, spawnSync } = require('child_process'),
+{ constants: filesystemConstants, promises: filesystem } = require('fs'),
+path = require('path');
 
 async function installModule({
-  installPath, // path of package.json.
-  options = { checkIfInstalled: true },
-}) {
-  // Install nodejs packages before
-  let nodeModulesPath = path.join(installPath, 'node_modules')
-  let nodeModulesExist
+  installPath,
+  options = { checkIfInstalled: true } })
+{
+
+  let nodeModulesPath = path.join(installPath, 'node_modules');
+  let nodeModulesExist;
   if (options.checkIfInstalled)
-    nodeModulesExist = await filesystem
-      .access(nodeModulesPath, filesystemConstants.F_OK) // check if directory exist
-      .then(() => true)
-      .catch(error => false)
+  nodeModulesExist = await filesystem.
+  access(nodeModulesPath, filesystemConstants.F_OK).
+  then(() => true).
+  catch(error => false);
   if (!nodeModulesExist || !options.checkIfInstalled) {
-    console.log(`\x1b[2m%s\x1b[0m'`, `• yarn install for folder: ${installPath}`)
-    spawnSync('yarn', ['install --pure-lockfile --production=false'], { cwd: installPath, shell: true, stdio: [0, 1, 2] })
+    console.log(`\x1b[2m%s\x1b[0m'`, `• yarn install for folder: ${installPath}`);
+    spawnSync('yarn', ['install --pure-lockfile --production=false'], { cwd: installPath, shell: true, stdio: [0, 1, 2] });
   } else {
-    // skip installation
+
   }
 }
 
-// Interface for multiple install locations.
+
 async function installModuleMultiple({ installPathArray, options = {} }) {
   for (let installPath of installPathArray) {
-    await installModule({ installPath })
+    await installModule({ installPath });
   }
 }
 
 module.exports = {
   installModule,
-  installModuleMultiple,
-}
+  installModuleMultiple };
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NvdXJjZS9zY3JpcHQuanMiXSwibmFtZXMiOlsiZXhlY1N5bmMiLCJzcGF3biIsInNwYXduU3luYyIsInJlcXVpcmUiLCJjb25zdGFudHMiLCJmaWxlc3lzdGVtQ29uc3RhbnRzIiwicHJvbWlzZXMiLCJmaWxlc3lzdGVtIiwicGF0aCIsImluc3RhbGxNb2R1bGUiLCJpbnN0YWxsUGF0aCIsIm9wdGlvbnMiLCJjaGVja0lmSW5zdGFsbGVkIiwibm9kZU1vZHVsZXNQYXRoIiwiam9pbiIsIm5vZGVNb2R1bGVzRXhpc3QiLCJhY2Nlc3MiLCJGX09LIiwidGhlbiIsImNhdGNoIiwiZXJyb3IiLCJjb25zb2xlIiwibG9nIiwiY3dkIiwic2hlbGwiLCJzdGRpbyIsImluc3RhbGxNb2R1bGVNdWx0aXBsZSIsImluc3RhbGxQYXRoQXJyYXkiLCJtb2R1bGUiLCJleHBvcnRzIl0sIm1hcHBpbmdzIjoiYUFBQSxNQUFNLEVBQUVBLFFBQUYsRUFBWUMsS0FBWixFQUFtQkMsU0FBbkIsS0FBaUNDLE9BQU8sQ0FBQyxlQUFELENBQTlDO0FBQ0UsRUFBRUMsU0FBUyxFQUFFQyxtQkFBYixFQUFrQ0MsUUFBUSxFQUFFQyxVQUE1QyxLQUEyREosT0FBTyxDQUFDLElBQUQsQ0FEcEU7QUFFRUssSUFBSSxHQUFHTCxPQUFPLENBQUMsTUFBRCxDQUZoQjs7QUFJQSxlQUFlTSxhQUFmLENBQTZCO0FBQzNCQyxFQUFBQSxXQUQyQjtBQUUzQkMsRUFBQUEsT0FBTyxHQUFHLEVBQUVDLGdCQUFnQixFQUFFLElBQXBCLEVBRmlCLEVBQTdCO0FBR0c7O0FBRUQsTUFBSUMsZUFBZSxHQUFHTCxJQUFJLENBQUNNLElBQUwsQ0FBVUosV0FBVixFQUF1QixjQUF2QixDQUF0QjtBQUNBLE1BQUlLLGdCQUFKO0FBQ0EsTUFBSUosT0FBTyxDQUFDQyxnQkFBWjtBQUNFRyxFQUFBQSxnQkFBZ0IsR0FBRyxNQUFNUixVQUFVO0FBQ2hDUyxFQUFBQSxNQURzQixDQUNmSCxlQURlLEVBQ0VSLG1CQUFtQixDQUFDWSxJQUR0QjtBQUV0QkMsRUFBQUEsSUFGc0IsQ0FFakIsTUFBTSxJQUZXO0FBR3RCQyxFQUFBQSxLQUhzQixDQUdoQkMsS0FBSyxJQUFJLEtBSE8sQ0FBekI7QUFJRixNQUFJLENBQUNMLGdCQUFELElBQXFCLENBQUNKLE9BQU8sQ0FBQ0MsZ0JBQWxDLEVBQW9EO0FBQ2xEUyxJQUFBQSxPQUFPLENBQUNDLEdBQVIsQ0FBYSxtQkFBYixFQUFrQyw4QkFBNkJaLFdBQVksRUFBM0U7QUFDQVIsSUFBQUEsU0FBUyxDQUFDLE1BQUQsRUFBUyxDQUFDLDRDQUFELENBQVQsRUFBeUQsRUFBRXFCLEdBQUcsRUFBRWIsV0FBUCxFQUFvQmMsS0FBSyxFQUFFLElBQTNCLEVBQWlDQyxLQUFLLEVBQUUsQ0FBQyxDQUFELEVBQUksQ0FBSixFQUFPLENBQVAsQ0FBeEMsRUFBekQsQ0FBVDtBQUNELEdBSEQsTUFHTzs7QUFFTjtBQUNGOzs7QUFHRCxlQUFlQyxxQkFBZixDQUFxQyxFQUFFQyxnQkFBRixFQUFvQmhCLE9BQU8sR0FBRyxFQUE5QixFQUFyQyxFQUF5RTtBQUN2RSxPQUFLLElBQUlELFdBQVQsSUFBd0JpQixnQkFBeEIsRUFBMEM7QUFDeEMsVUFBTWxCLGFBQWEsQ0FBQyxFQUFFQyxXQUFGLEVBQUQsQ0FBbkI7QUFDRDtBQUNGOztBQUVEa0IsTUFBTSxDQUFDQyxPQUFQLEdBQWlCO0FBQ2ZwQixFQUFBQSxhQURlO0FBRWZpQixFQUFBQSxxQkFGZSxFQUFqQiIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IHsgZXhlY1N5bmMsIHNwYXduLCBzcGF3blN5bmMgfSA9IHJlcXVpcmUoJ2NoaWxkX3Byb2Nlc3MnKSxcclxuICB7IGNvbnN0YW50czogZmlsZXN5c3RlbUNvbnN0YW50cywgcHJvbWlzZXM6IGZpbGVzeXN0ZW0gfSA9IHJlcXVpcmUoJ2ZzJyksXHJcbiAgcGF0aCA9IHJlcXVpcmUoJ3BhdGgnKVxyXG5cclxuYXN5bmMgZnVuY3Rpb24gaW5zdGFsbE1vZHVsZSh7XHJcbiAgaW5zdGFsbFBhdGgsIC8vIHBhdGggb2YgcGFja2FnZS5qc29uLlxyXG4gIG9wdGlvbnMgPSB7IGNoZWNrSWZJbnN0YWxsZWQ6IHRydWUgfSxcclxufSkge1xyXG4gIC8vIEluc3RhbGwgbm9kZWpzIHBhY2thZ2VzIGJlZm9yZVxyXG4gIGxldCBub2RlTW9kdWxlc1BhdGggPSBwYXRoLmpvaW4oaW5zdGFsbFBhdGgsICdub2RlX21vZHVsZXMnKVxyXG4gIGxldCBub2RlTW9kdWxlc0V4aXN0XHJcbiAgaWYgKG9wdGlvbnMuY2hlY2tJZkluc3RhbGxlZClcclxuICAgIG5vZGVNb2R1bGVzRXhpc3QgPSBhd2FpdCBmaWxlc3lzdGVtXHJcbiAgICAgIC5hY2Nlc3Mobm9kZU1vZHVsZXNQYXRoLCBmaWxlc3lzdGVtQ29uc3RhbnRzLkZfT0spIC8vIGNoZWNrIGlmIGRpcmVjdG9yeSBleGlzdFxyXG4gICAgICAudGhlbigoKSA9PiB0cnVlKVxyXG4gICAgICAuY2F0Y2goZXJyb3IgPT4gZmFsc2UpXHJcbiAgaWYgKCFub2RlTW9kdWxlc0V4aXN0IHx8ICFvcHRpb25zLmNoZWNrSWZJbnN0YWxsZWQpIHtcclxuICAgIGNvbnNvbGUubG9nKGBcXHgxYlsybSVzXFx4MWJbMG0nYCwgYOKAoiB5YXJuIGluc3RhbGwgZm9yIGZvbGRlcjogJHtpbnN0YWxsUGF0aH1gKVxyXG4gICAgc3Bhd25TeW5jKCd5YXJuJywgWydpbnN0YWxsIC0tcHVyZS1sb2NrZmlsZSAtLXByb2R1Y3Rpb249ZmFsc2UnXSwgeyBjd2Q6IGluc3RhbGxQYXRoLCBzaGVsbDogdHJ1ZSwgc3RkaW86IFswLCAxLCAyXSB9KVxyXG4gIH0gZWxzZSB7XHJcbiAgICAvLyBza2lwIGluc3RhbGxhdGlvblxyXG4gIH1cclxufVxyXG5cclxuLy8gSW50ZXJmYWNlIGZvciBtdWx0aXBsZSBpbnN0YWxsIGxvY2F0aW9ucy5cclxuYXN5bmMgZnVuY3Rpb24gaW5zdGFsbE1vZHVsZU11bHRpcGxlKHsgaW5zdGFsbFBhdGhBcnJheSwgb3B0aW9ucyA9IHt9IH0pIHtcclxuICBmb3IgKGxldCBpbnN0YWxsUGF0aCBvZiBpbnN0YWxsUGF0aEFycmF5KSB7XHJcbiAgICBhd2FpdCBpbnN0YWxsTW9kdWxlKHsgaW5zdGFsbFBhdGggfSlcclxuICB9XHJcbn1cclxuXHJcbm1vZHVsZS5leHBvcnRzID0ge1xyXG4gIGluc3RhbGxNb2R1bGUsXHJcbiAgaW5zdGFsbE1vZHVsZU11bHRpcGxlLFxyXG59XHJcbiJdfQ==
